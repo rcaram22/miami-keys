@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Miami & Keys 2026</title>
+  <meta name="theme-color" content="#0f3b45">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Miami & Keys">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f2f8f6;
+      --surface: #ffffff;
+      --ink: #0f3b45;
+      --muted: #557078;
+      --line: #d6e6e2;
+      --c-vie: #f7c6d0;
+      --c-sab: #ffd98a;
+      --c-dom: #a8e0d1;
+      --c-lun: #bccaf3;
+      --c-mar: #f9bd9f;
+      --c-mie: #d6c4f0;
+      --accent: #c2365a;
+      --ok: #1d7a6c;
+      --warn: #b4531f;
+      --display: 'Limelight', 'Georgia', serif;
+      --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b1f25;
+        --surface: #122e37;
+        --ink: #e6f3f0;
+        --muted: #9dbcc2;
+        --line: #24464f;
+        --accent: #ff8fab;
+        --ok: #6fd3bf;
+        --warn: #ffb38a;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0b1f25;
+      --surface: #122e37;
+      --ink: #e6f3f0;
+      --muted: #9dbcc2;
+      --line: #24464f;
+      --accent: #ff8fab;
+      --ok: #6fd3bf;
+      --warn: #ffb38a;
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 18px 64px
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-weight: 400
+    }
+
+    a {
+      color: inherit
+    }
+
+    button {
+      font: inherit;
+      color: inherit
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 6px
+    }
+
+    header {
+      padding: 12px 0 28px
+    }
+
+    .title {
+      font-family: var(--display);
+      font-size: clamp(44px, 13vw, 68px);
+      line-height: .95;
+      letter-spacing: .5px
+    }
+
+    .sub {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px
+    }
+
+    .count {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      font-weight: 600;
+      font-size: 15px
+    }
+
+    /* Day strip: pastel facades */
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      align-items: end;
+      margin: 8px 0 0
+    }
+
+    .tab {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 2px 10px;
+      border-radius: 40px 40px 6px 6px;
+      color: #0f3b45;
+      text-align: center;
+      transition: padding .2s ease;
+      min-height: 84px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end
+    }
+
+    .tab .d {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .tab .n {
+      font-family: var(--display);
+      font-size: 28px;
+      line-height: 1
+    }
+
+    .tab[aria-selected="true"] {
+      padding-top: 34px;
+      box-shadow: inset 0 -5px 0 #0f3b45
+    }
+
+    .tab.today .d::after {
+      content: " hoy"
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tab {
+        transition: none
+      }
+    }
+
+    .day {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 18px 18px;
+      padding: 22px 18px 10px
+    }
+
+    .day h2 {
+      font-family: var(--display);
+      font-size: 34px;
+      line-height: 1.05
+    }
+
+    .day .note {
+      color: var(--muted);
+      margin: 8px 0 14px;
+      font-size: 15.5px
+    }
+
+    .items {
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    .items li {
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 13px 0;
+      border-top: 1px solid var(--line)
+    }
+
+    .items .t {
+      font-weight: 700;
+      color: var(--ok);
+      font-size: 15px;
+      padding-top: 1px;
+      font-variant-numeric: tabular-nums
+    }
+
+    .items .a {
+      cursor: pointer
+    }
+
+    .items li.next {
+      background: color-mix(in srgb, var(--accent) 9%, transparent);
+      border-radius: 12px;
+      margin: 0 -10px;
+      padding-left: 10px;
+      padding-right: 10px
+    }
+
+    .items li.next .t::after {
+      content: "Ahora";
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    .offline {
+      display: none;
+      margin: 12px 0 0 8px;
+      font-size: 14px;
+      color: var(--warn);
+      font-weight: 600
+    }
+
+    .offline.on {
+      display: inline-block
+    }
+
+    .items li.done .a {
+      text-decoration: line-through;
+      color: var(--muted)
+    }
+
+    .chk {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0
+    }
+
+    li.done .chk {
+      background: var(--ok);
+      border-color: var(--ok)
+    }
+
+    li.done .chk::after {
+      content: "";
+      width: 7px;
+      height: 12px;
+      border: solid var(--surface);
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg) translate(-1px, -1px)
+    }
+
+    .map {
+      display: inline-block;
+      margin-top: 3px;
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none
+    }
+
+    .map:hover {
+      text-decoration: underline
+    }
+
+    section.block {
+      margin-top: 40px
+    }
+
+    section.block h2 {
+      font-family: var(--display);
+      font-size: 30px;
+      margin-bottom: 6px
+    }
+
+    section.block h2 button {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      text-align: left;
+      cursor: pointer
+    }
+
+    .chev {
+      flex: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      display: grid;
+      place-items: center
+    }
+
+    .chev::after {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border: solid var(--muted);
+      border-width: 0 2.5px 2.5px 0;
+      transform: translateY(2px) rotate(-135deg);
+      transition: transform .2s ease
+    }
+
+    [aria-expanded="false"] .chev::after {
+      transform: translateY(-2px) rotate(45deg)
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .chev::after {
+        transition: none
+      }
+    }
+
+    .lead {
+      color: var(--muted);
+      margin: 0 0 16px;
+      font-size: 15.5px
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px
+    }
+
+    .totals {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .totals div {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px
+    }
+
+    .totals span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .totals b {
+      font-size: 18px;
+      font-variant-numeric: tabular-nums
+    }
+
+    .cat {
+      padding: 10px 0;
+      border-top: 1px solid var(--line)
+    }
+
+    .cat:first-child {
+      border-top: 0
+    }
+
+    .cat .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 15.5px
+    }
+
+    .cat .row b {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600
+    }
+
+    .bar {
+      height: 8px;
+      background: var(--line);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 6px
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      background: var(--ok);
+      border-radius: 99px
+    }
+
+    .bar i.over {
+      background: var(--warn)
+    }
+
+    form.add {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 8px;
+      margin-top: 16px
+    }
+
+    form.add select,
+    form.add input {
+      font: inherit;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      width: 100%;
+      min-width: 0
+    }
+
+    form.add .full {
+      grid-column: 1 / -1
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--ink);
+      color: var(--bg);
+      font-weight: 700;
+      cursor: pointer
+    }
+
+    .log {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      font-size: 15px
+    }
+
+    .log li {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px dashed var(--line)
+    }
+
+    .log button {
+      border: 0;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0 4px
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 12px
+    }
+
+    .todo {
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    .todo li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      align-items: start
+    }
+
+    .todo li:first-child {
+      border-top: 0
+    }
+
+    .todo li.done span {
+      text-decoration: line-through;
+      color: var(--muted)
+    }
+
+    .todo li.del {
+      grid-template-columns: auto 1fr auto
+    }
+
+    .todo .x {
+      border: 0;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px 4px
+    }
+
+    .maplink {
+      margin-left: 6px;
+      text-decoration: none;
+      color: var(--accent)
+    }
+
+    .list+.list {
+      margin-top: 14px
+    }
+
+    .list h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--display);
+      font-size: 24px;
+      margin-bottom: 4px
+    }
+
+    .list h3 small {
+      font-family: var(--body);
+      font-size: 14px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums
+    }
+
+    .zone {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 1px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #0f3b45;
+      vertical-align: 2px
+    }
+
+    .zone.miami {
+      background: var(--c-vie)
+    }
+
+    .zone.keys {
+      background: var(--c-dom)
+    }
+
+    .todo li.done .zone {
+      opacity: .6
+    }
+
+    form.add-one {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px
+    }
+
+    form.add-one input {
+      font: inherit;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      min-width: 0
+    }
+
+    form.add-one .btn {
+      padding: 12px 16px
+    }
+
+    form.login {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px
+    }
+
+    form.login[hidden] {
+      display: none
+    }
+
+    form.login p {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    form.login input {
+      font: inherit;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      min-width: 0
+    }
+
+    .login-err {
+      color: var(--warn);
+      font-size: 14px
+    }
+
+    .login-err:empty {
+      display: none
+    }
+
+    .flights {
+      display: grid;
+      gap: 10px
+    }
+
+    .flight {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 12px
+    }
+
+    .flight+.flight {
+      border-top: 1px solid var(--line);
+      padding-top: 10px
+    }
+
+    .flight .when {
+      font-weight: 700
+    }
+
+    .flight .num {
+      color: var(--muted);
+      font-size: 15px;
+      text-align: right
+    }
+
+    .flight .route {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    footer {
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center
+    }
+
+    .theme {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 14px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1 class="title">Miami<br>&amp; Keys</h1>
+      <div id="hero" hidden>
+        <p class="sub" id="subtitle"></p>
+        <span class="count" id="count"></span>
+        <a class="count maplink" id="maplink" target="_blank" rel="noopener">Ver mapa del viaje ↗</a>
+      </div>
+      <span class="offline" id="offline">Sin conexión, usando la copia guardada</span>
+      <p class="sub" id="boot" role="status">Cargando…</p>
+      <form class="card login" id="login" hidden>
+        <b>Iniciá sesión</b>
+        <p>El viaje es privado. Entrá con tu usuario para verlo.</p>
+        <input id="f-email" type="email" autocomplete="username" placeholder="Correo" aria-label="Correo" required>
+        <input id="f-pass" type="password" autocomplete="current-password" placeholder="Contraseña" aria-label="Contraseña" required>
+        <button class="btn" type="submit">Iniciar sesión</button>
+        <span class="login-err" id="login-err" role="alert"></span>
+      </form>
+    </header>
+
+    <main id="app" hidden>
+    <nav class="strip" role="tablist" aria-label="Días del viaje" id="strip"></nav>
+    <article class="day" id="day" role="tabpanel"></article>
+
+    <section class="block" aria-labelledby="h-lists">
+      <h2 id="h-lists">Checklists</h2>
+      <p class="lead">Lo que queremos conocer, probar y recorrer, sin día fijo.</p>
+      <div id="lists"></div>
+    </section>
+
+    <section class="block" aria-labelledby="h-compras">
+      <h2 id="h-compras">Compras</h2>
+      <p class="lead">Lo que queremos comprar. Marcalo cuando ya lo tengan.</p>
+      <div class="card">
+        <ul class="todo" id="compras"></ul>
+        <form class="add-one" id="add-buy">
+          <input id="f-buy" type="text" placeholder="Ej.: remera negra talle L" aria-label="Nueva compra" required>
+          <button class="btn" type="submit">Agregar</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-gastos">
+      <h2 id="h-gastos">Gastos</h2>
+      <p class="lead">Presupuesto total de <span id="b-total"></span>. Anotá lo que gastan y fijate cuánto queda en cada rubro.</p>
+      <div class="totals">
+        <div><span>Pagado</span><b id="b-paid"></b></div>
+        <div><span>Por gastar</span><b id="b-left"></b></div>
+        <div><span>Gastado</span><b id="spent">$0</b></div>
+      </div>
+      <div class="card">
+        <div id="cats"></div>
+        <form class="add" id="add">
+          <select id="f-cat" class="full" aria-label="Rubro"></select>
+          <input id="f-what" type="text" placeholder="Qué fue (opcional)" aria-label="Concepto">
+          <input id="f-amt" type="number" inputmode="decimal" step="0.01" min="0" placeholder="USD"
+            aria-label="Monto en dólares" required>
+          <button class="btn full" type="submit">Agregar gasto</button>
+        </form>
+        <ul class="log" id="log"></ul>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-pend">
+      <h2 id="h-pend">Antes de viajar</h2>
+      <p class="lead">Tocá cada punto cuando esté resuelto.</p>
+      <div class="card">
+        <ul class="todo" id="todo"></ul>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-valijas">
+      <h2 id="h-valijas">Valijas</h2>
+      <p class="lead">Lo que no nos puede faltar. Agregá lo que quieras y marcalo cuando esté adentro.</p>
+      <div class="card">
+        <ul class="todo" id="packing"></ul>
+        <form class="add-one" id="add-pack">
+          <input id="f-pack" type="text" placeholder="Agregar algo" aria-label="Nuevo ítem para la valija" required>
+          <button class="btn" type="submit">Agregar</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-vuelos">
+      <h2 id="h-vuelos">Vuelos</h2>
+      <div class="card flights" id="flights"></div>
+    </section>
+
+    </main>
+
+    <footer>
+      <div id="sync-status" hidden></div>
+      <button class="theme" id="logout" type="button" hidden>Cerrar sesión</button>
+      <button class="theme" id="theme" type="button">Cambiar tema</button>
+    </footer>
+  </div>
+
+  <script>
+    const M = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+
+    const store = {
+      get(k, def) { try { const v = localStorage.getItem('mk26-' + k); return v ? JSON.parse(v) : def; } catch (e) { return def; } },
+      set(k, v) { try { localStorage.setItem('mk26-' + k, JSON.stringify(v)); } catch (e) { } }
+    };
+    // Trip data used to live in localStorage; it now only exists behind the login.
+    ['done', 'todo', 'lists', 'compras', 'log', 'packing'].forEach(k => { try { localStorage.removeItem('mk26-' + k); } catch (e) { } });
+
+    let DAYS = [], CATS = [], TODO = [], LISTS = [], TRIP = null;
+    const empty = () => ({ done: {}, todo: {}, lists: {}, compras: {}, log: {}, packing: {} });
+    let state = empty();
+    let remote = null;
+
+    // Every change goes through here; undefined deletes the key.
+    function set(section, key, value) {
+      if (value === undefined) delete state[section][key]; else state[section][key] = value;
+      if (remote) remote(section, key, value);
+      renderAll();
+    }
+    const toggle = (section, key) => set(section, key, state[section][key] ? undefined : true);
+
+    const $ = id => document.getElementById(id);
+    function show(view, msg) {
+      $('boot').hidden = view !== 'boot';
+      $('boot').textContent = msg || 'Cargando…';
+      $('login').hidden = view !== 'login';
+      $('hero').hidden = $('app').hidden = view !== 'app';
+    }
+
+    window.MK = {
+      signedOut() { state = empty(); TRIP = null; show('login'); },
+      signedIn() { if (!TRIP) show('boot'); },
+      fail(msg) { show('boot', msg); },
+      replace(data) { state = { ...empty(), ...data }; renderAll(); },
+      setContent(c) {
+        const first = !TRIP;
+        ({ DAYS, CATS, TODO, LISTS, TRIP } = c);
+        if (first) {
+          const today = DAYS.find(x => x.date === localISO(new Date()));
+          current = today ? today.id : DAYS[0].id;
+        }
+        renderStatic(); renderStrip(); renderAll(); show('app');
+      },
+      connect(fn) { remote = fn; },
+      disconnect() { remote = null; },
+    };
+
+    const fmt = n => '$' + n.toLocaleString('es-UY', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    function localISO(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+    const fromISO = iso => { const [y, m, d] = iso.split('-').map(Number); return new Date(y, m - 1, d); };
+    let current = null;
+
+    function countdown() {
+      const el = $('count');
+      const start = fromISO(TRIP.start), end = fromISO(TRIP.end), now = new Date();
+      const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diff = Math.round((start - t) / 86400000);
+      if (diff > 1) el.textContent = 'Faltan ' + diff + ' días';
+      else if (diff === 1) el.textContent = 'Mañana arranca el viaje';
+      else if (t <= end) el.textContent = 'Estamos de viaje';
+      else el.textContent = 'Viaje terminado';
+    }
+
+    function renderStatic() {
+      $('subtitle').textContent = TRIP.subtitle;
+      $('maplink').href = TRIP.mapUrl;
+      countdown();
+      const { total, paid } = TRIP.budget;
+      $('b-total').textContent = fmt(total);
+      $('b-paid').textContent = fmt(paid);
+      $('b-left').textContent = fmt(Math.round((total - paid) * 100) / 100);
+      $('flights').innerHTML = TRIP.flights.map(([when, num, route]) => `<div class="flight"><span class="when">${esc(when)}</span><span class="num">${esc(num)}</span><span class="route">${esc(route)}</span></div>`).join('');
+      $('f-cat').innerHTML = CATS.map(([c]) => `<option>${esc(c)}</option>`).join('');
+    }
+
+    function renderStrip() {
+      const s = document.getElementById('strip');
+      const todayISO = localISO(new Date());
+      s.innerHTML = DAYS.map(x => `<button class="tab${x.date === todayISO ? ' today' : ''}" role="tab" id="tab-${x.id}" aria-controls="day" aria-selected="${x.id === current}" tabindex="${x.id === current ? 0 : -1}" style="background:var(--c-${x.id})" data-id="${x.id}"><span class="d">${x.d}</span><span class="n">${x.n}</span></button>`).join('');
+      s.querySelectorAll('.tab').forEach(b => {
+        b.onclick = () => { current = b.dataset.id; renderStrip(); renderDay(); };
+        b.onkeydown = e => {
+          const i = DAYS.findIndex(x => x.id === current);
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            const j = (i + (e.key === 'ArrowRight' ? 1 : -1) + DAYS.length) % DAYS.length;
+            current = DAYS[j].id; renderStrip(); renderDay();
+            document.getElementById('tab-' + current).focus();
+          }
+        };
+      });
+    }
+
+    const toMin = t => { const m = /^(\d{1,2}):(\d{2})$/.exec(t); return m ? +m[1] * 60 + +m[2] : null; };
+
+    // Index of the item in progress: the last one that already started (stopping where
+    // times wrap past midnight), skipping forward past anything marked done.
+    function nowIndex(x) {
+      if (x.date !== localISO(new Date())) return -1;
+      const now = new Date(), mins = now.getHours() * 60 + now.getMinutes();
+      let idx = -1, prev = -1;
+      x.items.forEach((it, i) => {
+        const m = toMin(it[0]);
+        if (m === null || prev === Infinity) return;
+        if (m < prev) { prev = Infinity; return; }
+        prev = m;
+        if (m <= mins) idx = i;
+      });
+      if (idx < 0) return -1;
+      while (idx < x.items.length && state.done[x.id + '-' + idx]) idx++;
+      return idx < x.items.length ? idx : -1;
+    }
+
+    function renderDay() {
+      const x = DAYS.find(d => d.id === current);
+      const nowI = nowIndex(x);
+      const el = document.getElementById('day');
+      el.setAttribute('aria-labelledby', 'tab-' + x.id);
+      el.style.borderTop = '6px solid var(--c-' + x.id + ')';
+      el.innerHTML = `<h2>${esc(x.title)}</h2><p class="note">${esc(x.note)}</p><ul class="items">` +
+        x.items.map((it, i) => {
+          const key = x.id + '-' + i, isDone = !!state.done[key];
+          return `<li class="${isDone ? 'done' : ''}${i === nowI ? ' next' : ''}"><span class="t">${esc(it[0])}</span><div><span class="a" data-k="${key}">${esc(it[1])}</span>${it[2] ? `<br><a class="map" href="${M(it[2])}" target="_blank" rel="noopener">Abrir en Maps</a>` : ''}</div><button class="chk" type="button" data-k="${key}" aria-pressed="${isDone}" aria-label="Marcar como hecho: ${esc(it[1])}"></button></li>`;
+        }).join('') + '</ul>';
+      el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => toggle('done', b.dataset.k));
+    }
+
+    function renderLists() {
+      const el = document.getElementById('lists');
+      el.innerHTML = LISTS.map(l => {
+        const n = l.items.filter(([name]) => state.lists[l.id + ':' + name]).length;
+        return `<div class="card list"><h3>${esc(l.title)}<small>${n} de ${l.items.length}</small></h3><ul class="todo">` +
+          l.items.map(([name, zone, q]) => {
+            const key = l.id + ':' + name, isDone = !!state.lists[key];
+            return `<li class="${isDone ? 'done' : ''}"><button class="chk" type="button" data-k="${esc(key)}" aria-pressed="${isDone}" aria-label="Hecho: ${esc(name)}"></button><div><span>${esc(name)}</span>${zone ? `<span class="zone ${zone.toLowerCase()}">${esc(zone)}</span>` : ''}${q ? `<br><a class="map" href="${M(q)}" target="_blank" rel="noopener">Abrir en Maps</a>` : ''}</div></li>`;
+          }).join('') + '</ul></div>';
+      }).join('');
+      el.querySelectorAll('.chk').forEach(b => b.onclick = () => toggle('lists', b.dataset.k));
+    }
+
+    const sortedIds = obj => Object.keys(obj).sort((a, b) => a - b);
+
+    function renderEditable(section, ulId, doneLabel) {
+      const ul = document.getElementById(ulId), items = state[section], ids = sortedIds(items);
+      ul.innerHTML = ids.length ? ids.map(id => { const p = items[id]; return `<li class="del${p.done ? ' done' : ''}"><button class="chk" type="button" data-id="${id}" aria-pressed="${!!p.done}" aria-label="${doneLabel}: ${esc(p.t)}"></button><span>${esc(p.t)}</span><button class="x" type="button" data-del="${id}" aria-label="Quitar ${esc(p.t)}">✕</button></li>`; }).join('') : '<li class="empty" style="border:0">La lista está vacía.</li>';
+      ul.querySelectorAll('.chk').forEach(b => b.onclick = () => { const p = items[b.dataset.id]; set(section, b.dataset.id, { ...p, done: !p.done }); });
+      ul.querySelectorAll('.x').forEach(b => b.onclick = () => set(section, b.dataset.del, undefined));
+    }
+
+    function bindAdd(formId, inputId, section) {
+      document.getElementById(formId).onsubmit = e => {
+        e.preventDefault();
+        const input = document.getElementById(inputId), t = input.value.trim();
+        if (!t) return;
+        input.value = '';
+        set(section, Date.now(), { t, done: false });
+      };
+    }
+    bindAdd('add-pack', 'f-pack', 'packing');
+    bindAdd('add-buy', 'f-buy', 'compras');
+
+    function renderTodo() {
+      const ul = document.getElementById('todo'), todo = state.todo;
+      ul.innerHTML = TODO.map((t, i) => `<li class="${todo[i] ? 'done' : ''}"><button class="chk" type="button" data-i="${i}" aria-pressed="${!!todo[i]}" aria-label="Resuelto: ${esc(t)}" style="${todo[i] ? 'background:var(--ok);border-color:var(--ok)' : ''}"></button><span>${esc(t)}</span></li>`).join('');
+      ul.querySelectorAll('.chk').forEach(b => b.onclick = () => toggle('todo', b.dataset.i));
+    }
+
+    function renderGastos() {
+      const by = {}; let total = 0;
+      const ids = sortedIds(state.log), log = ids.map(id => ({ id, ...state.log[id] }));
+      log.forEach(g => { by[g.c] = (by[g.c] || 0) + g.m; total += g.m; });
+      document.getElementById('spent').textContent = fmt(total);
+      document.getElementById('cats').innerHTML = CATS.map(([c, b]) => {
+        const s = by[c] || 0; if (!b && !s) return '';
+        const pct = b ? Math.min(100, s / b * 100) : 100, over = b && s > b;
+        const right = b ? `${fmt(s)} de ${fmt(b)}` : fmt(s);
+        return `<div class="cat"><div class="row"><span>${c}</span><b style="${over ? 'color:var(--warn)' : ''}">${right}</b></div><div class="bar"><i class="${over || !b ? 'over' : ''}" style="width:${pct}%"></i></div></div>`;
+      }).join('');
+      const ul = document.getElementById('log');
+      ul.innerHTML = log.length ? log.slice().reverse().map((g) => `<li><span>${esc(g.c)}${g.w ? ': ' + esc(g.w) : ''}</span><span>${fmt(g.m)} <button type="button" data-id="${g.id}" aria-label="Borrar gasto">✕</button></span></li>`).join('') : '';
+      if (!log.length) ul.innerHTML = '<li style="border:0" class="empty">Todavía no hay gastos anotados.</li>';
+      ul.querySelectorAll('button').forEach(b => b.onclick = () => set('log', b.dataset.id, undefined));
+    }
+
+    document.getElementById('add').onsubmit = e => {
+      e.preventDefault();
+      const m = parseFloat(document.getElementById('f-amt').value);
+      if (!(m > 0)) return;
+      const g = { c: document.getElementById('f-cat').value, w: document.getElementById('f-what').value.trim(), m };
+      document.getElementById('f-amt').value = ''; document.getElementById('f-what').value = '';
+      set('log', Date.now(), g);
+    };
+
+    const root = document.documentElement;
+    const savedTheme = store.get('theme', null);
+    if (savedTheme) root.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme').onclick = () => {
+      const isDark = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      const next = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next); store.set('theme', next);
+    };
+
+    // Turn each section title into a toggle; collapsed state is a per-device view preference.
+    let collapsed = store.get('collapsed', {});
+    document.querySelectorAll('section.block').forEach(sec => {
+      const h2 = sec.querySelector('h2'), key = h2.id;
+      const body = document.createElement('div');
+      body.id = key + '-body';
+      while (h2.nextSibling) body.appendChild(h2.nextSibling);
+      sec.appendChild(body);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-controls', body.id);
+      btn.innerHTML = `<span>${h2.innerHTML}</span><span class="chev" aria-hidden="true"></span>`;
+      h2.replaceChildren(btn);
+      const apply = () => { body.hidden = !!collapsed[key]; btn.setAttribute('aria-expanded', String(!collapsed[key])); };
+      btn.onclick = () => { collapsed[key] = !collapsed[key]; store.set('collapsed', collapsed); apply(); };
+      apply();
+    });
+
+    function renderAll() {
+      if (!TRIP) return;
+      renderDay(); renderLists(); renderTodo(); renderGastos();
+      renderEditable('compras', 'compras', 'Comprado');
+      renderEditable('packing', 'packing', 'En la valija');
+    }
+    setInterval(() => { if (TRIP) { countdown(); renderDay(); } }, 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && TRIP) { countdown(); renderDay(); } });
+
+    const offline = document.getElementById('offline');
+    const syncOnline = () => offline.classList.toggle('on', !navigator.onLine);
+    addEventListener('online', syncOnline); addEventListener('offline', syncOnline); syncOnline();
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
+    import('./sync.js').catch(e => {
+      console.warn('Sync unavailable', e);
+      MK.fail('No se pudo cargar. Abrí la app una vez con conexión a internet.');
+    });
+  </script>
+</body>
+
+</html>

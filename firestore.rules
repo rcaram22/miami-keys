@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /trips/{trip} {
+      allow read, write: if request.auth != null && request.auth.uid in [
+        'UpmErmRxAVVWexYOt506c41xjDW2',
+        'l5yDKrRlteeN9jyV5vJ6wGHXqr73'
+      ];
+    }
+  }
+}
