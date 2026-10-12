@@ -541,6 +541,21 @@
       padding: 2px 4px
     }
 
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px
+    }
+
+    .pills .count {
+      margin: 0
+    }
+
+    #cams {
+      display: contents
+    }
+
     .maplink {
       margin-left: 6px;
       text-decoration: none;
@@ -703,8 +718,11 @@
       <h1 class="title">Miami<br>&amp; Keys</h1>
       <div id="hero" hidden>
         <p class="sub" id="subtitle"></p>
-        <span class="count" id="count"></span>
-        <a class="count maplink" id="maplink" target="_blank" rel="noopener">Ver mapa del viaje ↗</a>
+        <div class="pills">
+          <span class="count" id="count"></span>
+          <a class="count maplink" id="maplink" target="_blank" rel="noopener">Ver mapa del viaje ↗</a>
+          <span id="cams"></span>
+        </div>
       </div>
       <span class="offline" id="offline">Sin conexión, usando la copia guardada</span>
       <p class="sub" id="boot" role="status">Cargando…</p>
@@ -865,6 +883,7 @@
     function renderStatic() {
       $('subtitle').textContent = TRIP.subtitle;
       $('maplink').href = TRIP.mapUrl;
+      $('cams').innerHTML = (TRIP.cams || []).map(([label, url]) => `<a class="count maplink" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)} ↗</a>`).join('');
       countdown();
       const { total, paid } = TRIP.budget;
       $('b-total').textContent = fmt(total);

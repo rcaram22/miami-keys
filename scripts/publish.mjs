@@ -15,6 +15,10 @@ for (const k of ['DAYS', 'CATS', 'TODO', 'LISTS', 'TRIP']) {
 }
 
 function ask(question, hidden) {
+  if (!process.stdin.isTTY) {
+    console.error('Corré este script desde tu propia terminal: necesita pedirte el correo y la contraseña.');
+    process.exit(1);
+  }
   return new Promise(resolve => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: true });
     if (hidden) rl._writeToOutput = s => { if (s.includes(question)) rl.output.write(question); };
