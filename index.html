@@ -871,13 +871,24 @@
 
     function countdown() {
       const el = $('count');
-      const start = fromISO(TRIP.start), end = fromISO(TRIP.end), now = new Date();
+      const now = new Date();
       const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const diff = Math.round((start - t) / 86400000);
+      const diff = Math.round((fromISO(TRIP.start) - t) / 86400000);
       if (diff > 1) el.textContent = 'Faltan ' + diff + ' días';
-      else if (diff === 1) el.textContent = 'Mañana arranca el viaje';
-      else if (t <= end) el.textContent = 'Estamos de viaje';
-      else el.textContent = 'Viaje terminado';
+      else if (diff === 1) el.textContent = 'Falta 1 día';
+      else el.textContent = 'Día ' + -diff;
+    }
+
+    let lastDate = localISO(new Date());
+    function tick() {
+      const today = localISO(new Date());
+      if (today !== lastDate) {
+        lastDate = today;
+        const day = DAYS.find(x => x.date === today);
+        if (day) current = day.id;
+        renderStrip();
+      }
+      countdown(); renderDay();
     }
 
     function renderStatic() {
@@ -1043,8 +1054,8 @@
       renderEditable('compras', 'compras', 'Comprado');
       renderEditable('packing', 'packing', 'En la valija');
     }
-    setInterval(() => { if (TRIP) { countdown(); renderDay(); } }, 60000);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden && TRIP) { countdown(); renderDay(); } });
+    setInterval(() => { if (TRIP) tick(); }, 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && TRIP) tick(); });
 
     const offline = document.getElementById('offline');
     const syncOnline = () => offline.classList.toggle('on', !navigator.onLine);
