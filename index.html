@@ -499,6 +499,41 @@
       padding: 0 4px
     }
 
+    dialog.confirm {
+      border: 0;
+      border-radius: 18px;
+      padding: 20px;
+      width: min(340px, calc(100vw - 32px));
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit
+    }
+
+    dialog.confirm::backdrop {
+      background: rgb(0 0 0 / .45)
+    }
+
+    dialog.confirm p {
+      margin: 0 0 18px
+    }
+
+    dialog.confirm form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px
+    }
+
+    .btn.ghost {
+      background: none;
+      color: var(--ink);
+      border: 1px solid var(--line)
+    }
+
+    .btn.danger {
+      background: var(--warn);
+      color: #fff
+    }
+
     .empty {
       color: var(--muted);
       font-size: 15px;
@@ -806,6 +841,14 @@
 
     </main>
 
+    <dialog class="confirm" id="confirm-del" aria-labelledby="confirm-msg">
+      <p id="confirm-msg"></p>
+      <form method="dialog">
+        <button class="btn ghost" value="cancel" autofocus>Cancelar</button>
+        <button class="btn danger" value="ok">Borrar</button>
+      </form>
+    </dialog>
+
     <footer>
       <div id="sync-status" hidden></div>
       <button class="theme" id="logout" type="button" hidden>Cerrar sesión</button>
@@ -1009,7 +1052,15 @@
       const ul = document.getElementById('log');
       ul.innerHTML = log.length ? log.slice().reverse().map((g) => `<li><span>${esc(g.c)}${g.w ? ': ' + esc(g.w) : ''}</span><span>${fmt(g.m)} <button type="button" data-id="${g.id}" aria-label="Borrar gasto">✕</button></span></li>`).join('') : '';
       if (!log.length) ul.innerHTML = '<li style="border:0" class="empty">Todavía no hay gastos anotados.</li>';
-      ul.querySelectorAll('button').forEach(b => b.onclick = () => set('log', b.dataset.id, undefined));
+      ul.querySelectorAll('button').forEach(b => b.onclick = () => {
+        const g = state.log[b.dataset.id];
+        if (!g) return;
+        const dlg = document.getElementById('confirm-del');
+        document.getElementById('confirm-msg').textContent = `¿Borrar el gasto de ${fmt(g.m)} en ${g.c}${g.w ? ' (' + g.w + ')' : ''}?`;
+        dlg.returnValue = '';
+        dlg.onclose = () => { if (dlg.returnValue === 'ok') set('log', b.dataset.id, undefined); };
+        dlg.showModal();
+      });
     }
 
     document.getElementById('add').onsubmit = e => {
